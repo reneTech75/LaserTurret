@@ -9,14 +9,14 @@ There will be an error margin of 2cm on each point on the grid. So the laser poi
 //# include<LiquidCrystal.h>//we shall not use this in this project because of lack of space
 //first we create our two servo objects
 Servo HServo,VServo;
-int HServoPin = 2; //horizontal servo will be attached to pin 1
-int VServoPin = 3; ; //vertical servo will be attached to pin 2
+int HServoPin = 2; //horizontal servo will be attached to pin 2
+int VServoPin = 3; ; //vertical servo will be attached to pin 3
 
-int buttonUp = 4; //up button will be attached to pin 3
-int buttonDown = 5; //down  button will be attached to pin 4
-int buttonLeft = 6;  //left  button will be attached to pin 5
-int buttonRight = 7; //right button will be attached to pin 6
-int functionButton = 8; //this button will reverse control between manual and automatic
+int buttonUp = 4; //up button will be attached to pin 4
+int buttonDown = 5; //down  button will be attached to pin 5
+int buttonLeft = 6;  //left  button will be attached to pin 6
+int buttonRight = 7; //right button will be attached to pin 7
+int functionButton = 8; //this button will reverse control between manual and automatic it is set to pin 8
 char mode = “manual” // the are two modes of operation, manual, and machine. We will begin in //manual mode always
 int manualLed = 9; //this led will be on only when the control is in manual mode.
 int machineLed = 10; //this led will be on only when the control is in machine mode.
@@ -40,9 +40,12 @@ digitalWrite(manualLed, HIGH);// the manual led is ON, at the start of program b
 Serial.begin(9600);//start serial communication between my arduino circuit and my computer
 delay(1000); /*this delay is just to ensure that there is enough time for serial communication to be established before we start running other parts of our code
 */
-HServo.attach(HServo);
+HServo.attach(HServoPin);
 VServo.attach(VServoPin);
 }
+
+
+
 //This function will move the laser vertically depending on which direction is pressed
 int verticalButton(string directions){
 if directions == "UP"{ Vangle +=1;}
