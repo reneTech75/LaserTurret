@@ -17,11 +17,11 @@ int buttonDown = 5; //down  button will be attached to pin 5
 int buttonLeft = 6;  //left  button will be attached to pin 6
 int buttonRight = 7; //right button will be attached to pin 7
 int functionButton = 8; //this button will reverse control between manual and automatic it is set to pin 8. In other words it is a toggle switch that changes the mode of operation
-char mode = “manual” // the are two modes of operation, manual, and machine. We will begin in //manual mode always
+char mode = "manual"; // the are two modes of operation, manual, and machine. We will begin in //manual mode always
 int manualLed = 9; //this led will be on only when the control is in manual mode.
 int machineLed = 10; //this led will be on only when the control is in machine mode.
-int xList[] = {1,2,4,6,8,10,-1,-5,-10}// list of x-coordinates to plot 
-int yList[] = {1,2,4,6,8,10,-1,-5,-10}// list of y-coordinates to plot
+int xList[] = {1,2,4,6,8,10,-1,-5,-10};// list of x-coordinates to plot 
+int yList[] = {1,2,4,6,8,10,-1,-5,-10};// list of y-coordinates to plot
 
 double Xpos ; // x-coordinate of point on screen 
 double Ypos; // y-coordinate of point on screen
@@ -46,23 +46,23 @@ VServo.attach(VServoPin);
 
 
 //This function will move the laser vertically depending on which direction is pressed
-void verticalButton(string directions){
-if directions == "UP"{
-startPoint = VServo.read();
-    angle = startPoint;
+void verticalButton(String directions){
+if (directions == "UP"){
+int startPoint = VServo.read();
+    int angle = startPoint;
     while buttonUp == HIGH and angle <= 180{
       angle = angle + 1;
       VServo.write(angle);
-      delay(50)
+      delay(50);
 }
 }
-if directions == "DOWN"{
-startPoint = VServo.read();
-    angle = startPoint;
+if (directions == "DOWN"){
+int startPoint = VServo.read();
+    int angle = startPoint;
     while buttonUp == HIGH and angle >=0{
-      angle = angle - 1;
+      int angle = angle - 1;
       VServo.write(angle);
-      delay(50)
+      delay(50);
 }
 }
 
@@ -73,23 +73,23 @@ startPoint = VServo.read();
 
 
 //This function will move the laser horizontally depending on which direction is pressed
-void horizontalButton(string directions){
-if directions == "LEFT"{
-startPoint = HServo.read();
-    angle = startPoint;
+void horizontalButton(String directions){
+if (directions == "LEFT"){
+int startPoint = HServo.read();
+    int angle = startPoint;
     while buttonUp == HIGH and angle <= 180{
       angle = angle + 1;
       HServo.write(angle);
-      delay(50)
+      delay(50);
 }
 }
-if directions == "RIGHT"{
-startPoint = HServo.read();
-    angle = startPoint;
+if (directions == "RIGHT"){
+int startPoint = HServo.read();
+    int angle = startPoint;
     while buttonUp == HIGH and angle >=0{
       angle = angle - 1;
       HServo.write(angle);
-      delay(50)
+      delay(50);
 }
 }
 
@@ -97,8 +97,8 @@ startPoint = HServo.read();
 
 //the automatic function will move the laser to predefined points on its own accord
 void machine(){
-Serial.println(“I see that you are now in machine mode”)
-Serial.println(“For now the points you entered in your sketch will be used”);
+Serial.println("I see that you are now in machine mode");
+Serial.println("For now the points you entered in your sketch will be used");
 
 }
 
@@ -109,44 +109,40 @@ void loop()
 {
 /*This function call lets the user decide at any point whether to switch between manual or automatic control of the laser pointer. Each time the switch is pressed, the control method will switch to the other method.
 */
-if (digitalRead(functionButton) == HIGH && mode == “manual”){
-mode = “machine”;
+if (digitalRead(functionButton) == HIGH && mode == "manual"){
+mode = "machine";
 digitalWrite(manualLed, LOW);
 digitalWrite(machineLed,HIGH);
 machine();
 }
-if (digitalRead(functionButton) == HIGH && mode == “machine”){
-mode = “manual”;
+if (digitalRead(functionButton) == HIGH && mode == "machine"){
+mode = "manual";
 digitalWrite(machineLed,LOW);
 digitalWrite(manualLed, HIGH);
 }
 
 
 //Call and pass and UP direction to the verticalButton() function
-if (digitalRead(buttonUp) == HIGH && mode == “manual”){
+if (digitalRead(buttonUp) == HIGH && mode == "manual"){
 directions = "UP";
 verticalButton(directions);
 }
 
 //Call and pass DOWN direction to the verticalButton() function
-if (digitalRead(buttonDown) == HIGH && mode == “manual”){
+if (digitalRead(buttonDown) == HIGH && mode == "manual"){
 directions = "DOWN";
 verticalButton(directions);
 }
 
 //Call and pass and RIGHT direction to the horizontalButton() function
-if (digitalRead(buttonRight) == HIGH && mode == “manual”){
+if (digitalRead(buttonRight) == HIGH && mode == "manual"){
 directions = "RIGHT";
 horizontalButton(directions);
 }
 
 //Call and pass and LEFT direction to the horizontalButton() function
-if (digitalRead(buttonLeft) == HIGH && mode == “manual”){
+if (digitalRead(buttonLeft) == HIGH && mode == "manual"){
 directions = "LEFT";
 horizontalButton(directions);
 }
-
-
-
-
 }
