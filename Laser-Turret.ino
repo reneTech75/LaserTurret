@@ -16,7 +16,7 @@ int buttonUp = 4; //up button will be attached to pin 4
 int buttonDown = 5; //down  button will be attached to pin 5
 int buttonLeft = 6;  //left  button will be attached to pin 6
 int buttonRight = 7; //right button will be attached to pin 7
-int functionButton = 8; //this button will reverse control between manual and automatic it is set to pin 8
+int functionButton = 8; //this button will reverse control between manual and automatic it is set to pin 8. In other words it is a toggle switch that changes the mode of operation
 char mode = “manual” // the are two modes of operation, manual, and machine. We will begin in //manual mode always
 int manualLed = 9; //this led will be on only when the control is in manual mode.
 int machineLed = 10; //this led will be on only when the control is in machine mode.
@@ -45,24 +45,54 @@ VServo.attach(VServoPin);
 }
 
 
-
 //This function will move the laser vertically depending on which direction is pressed
-int verticalButton(string directions){
-if directions == "UP"{ Vangle +=1;}
-if directions == "DOWN"{Vangle -=1;}
-if Vangle >= 180{Vangle = 180;}
-if Vangle <= 0{Vangle = 0;}
-VServo.write(Vangle)
-return Vangle;
+void verticalButton(string directions){
+if directions == "UP"{
+startPoint = VServo.read();
+    angle = startPoint;
+    while buttonUp == HIGH and angle <= 180{
+      angle = angle + 1;
+      VServo.write(angle);
+      delay(50)
 }
+}
+if directions == "DOWN"{
+startPoint = VServo.read();
+    angle = startPoint;
+    while buttonUp == HIGH and angle >=0{
+      angle = angle - 1;
+      VServo.write(angle);
+      delay(50)
+}
+}
+
+}
+
+
+
+
+
 //This function will move the laser horizontally depending on which direction is pressed
-int horizontalButton(string directions){
-if (directions == "RIGHT"){ Hangle +=1;}
-if (directions == "LEFT"){Hangle -=1;}
-if (Hangle >= 180){Hangle = 180;}
-if (Hangle <= 0){Hangle = 0;}
-HServo.write(Hangle)
-return Hangle;
+void horizontalButton(string directions){
+if directions == "LEFT"{
+startPoint = HServo.read();
+    angle = startPoint;
+    while buttonUp == HIGH and angle <= 180{
+      angle = angle + 1;
+      HServo.write(angle);
+      delay(50)
+}
+}
+if directions == "RIGHT"{
+startPoint = HServo.read();
+    angle = startPoint;
+    while buttonUp == HIGH and angle >=0{
+      angle = angle - 1;
+      HServo.write(angle);
+      delay(50)
+}
+}
+
 }
 
 //the automatic function will move the laser to predefined points on its own accord
@@ -98,7 +128,7 @@ directions = "UP";
 verticalButton(directions);
 }
 
-//Call and pass and DOWN direction to the verticalButton() function
+//Call and pass DOWN direction to the verticalButton() function
 if (digitalRead(buttonDown) == HIGH && mode == “manual”){
 directions = "DOWN";
 verticalButton(directions);
