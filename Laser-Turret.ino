@@ -8,7 +8,7 @@ There will be an error margin of 2cm on each point on the grid. So the laser poi
 #include<Math.h>//we include this because we will need sine, cosine, tangent, and square roots ie namely sin(x), cos(x), tan(x), sqrt(x), etc.
 //# include<LiquidCrystal.h>//we shall not use this in this project because of lack of space
 //first we create our two servo objects
-Servo HServo,VServo;
+Servo HServo,VServo;//horizontal and vertical servos
 int HServoPin = 2; //horizontal servo will be attached to pin 2
 int VServoPin = 3; ; //vertical servo will be attached to pin 3
 
@@ -17,7 +17,7 @@ int buttonDown = 5; //down  button will be attached to pin 5
 int buttonLeft = 6;  //left  button will be attached to pin 6
 int buttonRight = 7; //right button will be attached to pin 7
 int functionButton = 8; //this button will reverse control between manual and automatic it is set to pin 8. In other words it is a toggle switch that changes the mode of operation
-char mode = "manual"; // the are two modes of operation, manual, and machine. We will begin in //manual mode always
+String mode = "manual"; // the are two modes of operation, manual, and machine. We will begin in //manual mode always
 int manualLed = 9; //this led will be on only when the control is in manual mode.
 int machineLed = 10; //this led will be on only when the control is in machine mode.
 int xList[] = {1,2,4,6,8,10,-1,-5,-10};// list of x-coordinates to plot 
@@ -26,10 +26,10 @@ int yList[] = {1,2,4,6,8,10,-1,-5,-10};// list of y-coordinates to plot
 double Xpos ; // x-coordinate of point on screen 
 double Ypos; // y-coordinate of point on screen
 double distance; // the distance from the screen to the laser source
-int Vangle = 0;
-int Hangle = 0;
-char directions;
-long clocks, time1, time2, duration;
+//int Vangle = 0;
+//int Hangle = 0;
+
+long clocks, time1, time2;
 
 
 void setup()
@@ -50,7 +50,7 @@ void verticalButton(String directions){
 if (directions == "UP"){
 int startPoint = VServo.read();
     int angle = startPoint;
-    while buttonUp == HIGH and angle <= 180{
+    while (digitalRead(buttonUp) == HIGH and angle <= 180){
       angle = angle + 1;
       VServo.write(angle);
       delay(50);
@@ -59,7 +59,7 @@ int startPoint = VServo.read();
 if (directions == "DOWN"){
 int startPoint = VServo.read();
     int angle = startPoint;
-    while buttonUp == HIGH and angle >=0{
+    while (digitalRead(buttonDown) == HIGH and angle >=0){
       int angle = angle - 1;
       VServo.write(angle);
       delay(50);
@@ -74,10 +74,11 @@ int startPoint = VServo.read();
 
 //This function will move the laser horizontally depending on which direction is pressed
 void horizontalButton(String directions){
+int angle;
 if (directions == "LEFT"){
 int startPoint = HServo.read();
-    int angle = startPoint;
-    while buttonUp == HIGH and angle <= 180{
+    angle = startPoint;
+    while (digitalRead(buttonLeft) == HIGH and angle <= 180){
       angle = angle + 1;
       HServo.write(angle);
       delay(50);
@@ -85,8 +86,8 @@ int startPoint = HServo.read();
 }
 if (directions == "RIGHT"){
 int startPoint = HServo.read();
-    int angle = startPoint;
-    while buttonUp == HIGH and angle >=0{
+    angle = startPoint;
+    while (digitalRead(buttonRight) == HIGH and angle >=0){
       angle = angle - 1;
       HServo.write(angle);
       delay(50);
@@ -124,25 +125,25 @@ digitalWrite(manualLed, HIGH);
 
 //Call and pass and UP direction to the verticalButton() function
 if (digitalRead(buttonUp) == HIGH && mode == "manual"){
-directions = "UP";
+String directions = "UP";
 verticalButton(directions);
 }
 
 //Call and pass DOWN direction to the verticalButton() function
 if (digitalRead(buttonDown) == HIGH && mode == "manual"){
-directions = "DOWN";
+String directions = "DOWN";
 verticalButton(directions);
 }
 
 //Call and pass and RIGHT direction to the horizontalButton() function
 if (digitalRead(buttonRight) == HIGH && mode == "manual"){
-directions = "RIGHT";
+String directions = "RIGHT";
 horizontalButton(directions);
 }
 
 //Call and pass and LEFT direction to the horizontalButton() function
 if (digitalRead(buttonLeft) == HIGH && mode == "manual"){
-directions = "LEFT";
+String directions = "LEFT";
 horizontalButton(directions);
 }
 }
