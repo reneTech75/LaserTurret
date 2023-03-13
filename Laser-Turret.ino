@@ -48,18 +48,18 @@ VServo.attach(VServoPin);
 //This function will move the laser vertically depending on which direction is pressed
 void verticalButton(String directions){
 if (directions == "UP"){
-int startPoint = VServo.read();
+int startPoint = VServo.read();//the servo will start moving from its current position
     int angle = startPoint;
-    while (digitalRead(buttonUp) == HIGH and angle <= 180){
+    while (digitalRead(buttonUp) == HIGH and angle < 180){
       angle = angle + 1;
       VServo.write(angle);
-      delay(50);
+      delay(50);//this is to moderate the speed of the servo, we shall play with the numbers and see the one that produces a smoth movement that is not jecky and abrupt
 }
 }
 if (directions == "DOWN"){
-int startPoint = VServo.read();
+int startPoint = VServo.read();//the servo will start moving from its current position
     int angle = startPoint;
-    while (digitalRead(buttonDown) == HIGH and angle >=0){
+    while (digitalRead(buttonDown) == HIGH and angle >0){
       int angle = angle - 1;
       VServo.write(angle);
       delay(50);
@@ -98,6 +98,10 @@ int startPoint = HServo.read();
 
 //the automatic function will move the laser to predefined points on its own accord
 void machine(){
+//
+
+
+
 Serial.println("I see that you are now in machine mode");
 Serial.println("For now the points you entered in your sketch will be used");
 
