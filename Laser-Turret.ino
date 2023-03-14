@@ -98,10 +98,6 @@ int startPoint = HServo.read();
 
 //the automatic function will move the laser to predefined points on its own accord
 void machine(){
-//
-
-
-
 Serial.println("I see that you are now in machine mode");
 Serial.println("For now the points you entered in your sketch will be used");
 
