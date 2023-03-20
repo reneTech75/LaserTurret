@@ -101,9 +101,31 @@ int startPoint = HServo.read();
 void machine(){
 Serial.println("I see that you are now in machine mode");
 Serial.println("For now the points you entered in your sketch will be used");
-for (int i=Ypos[]
-Vangle = atan(Ypos)
+
+//bring both servos to the zero position
+VServo.write(0);
+HServo.write(0);
+
+//calculate the angles to move both horizontally and vertically
+Vangle = atan(Ypos[0]/distance);
+Hangle = atan(Xpos[0]/distance);
+float angle = 0;
+while (angle <= Vangle){
+    angle = angle + 1;
+    VServo.write(angle);
+    delay(50);
 }
+angle = 0;
+while (angle <= Hangle){
+  angle = angle + 1;
+  Hangle.write(angle);
+  delay(50);
+}
+
+
+}
+
+
 
 
 
