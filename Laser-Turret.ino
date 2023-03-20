@@ -21,13 +21,14 @@ String mode = "manual"; // the are two modes of operation, manual, and machine. 
 int manualLed = 9; //this led will be on only when the control is in manual mode.
 int machineLed = 10; //this led will be on only when the control is in machine mode.
 int xList[] = {1,2,4,6,8,10,-1,-5,-10};// list of x-coordinates to plot 
-int yList[] = {1,2,4,6,8,10,-1,-5,-10};// list of y-coordinates to plot
+int yList[] = {3,2,4,6,8,10,-1,-5,-10};// list of y-coordinates to plot
 
-double Xpos ; // x-coordinate of point on screen 
-double Ypos; // y-coordinate of point on screen
-double distance; // the distance from the screen to the laser source
-//int Vangle = 0;
-//int Hangle = 0;
+int Xpos ; // x-coordinate of point on screen 
+int Ypos; // y-coordinate of point on screen
+float distance = 65; // the distance in cm from the screen to the laser source
+float Vangle = 0;//initial vertical angle
+float HAngle = 0;//initial horizontal angle
+
 
 long clocks, time1, time2;
 
@@ -100,7 +101,8 @@ int startPoint = HServo.read();
 void machine(){
 Serial.println("I see that you are now in machine mode");
 Serial.println("For now the points you entered in your sketch will be used");
-
+for (int i=Ypos[]
+Vangle = atan(Ypos)
 }
 
 
@@ -110,7 +112,7 @@ void loop()
 {
 /*This function call lets the user decide at any point whether to switch between manual or automatic control of the laser pointer. Each time the switch is pressed, the control method will switch to the other method.
 */
-if (digitalRead(functionButton) == HIGH && mode == "manual"){
+if (digitalRead(functionButton) == HIGH && mode == "manual"){//this means that the program had been in manual mode, and we want this push of the function burtton to toggle it to machine mode
 mode = "machine";
 digitalWrite(manualLed, LOW);
 digitalWrite(machineLed,HIGH);
